@@ -1,0 +1,202 @@
+---
+
+export const codigos = {
+  codigo1:`
+  @Component({
+  selector: 'app-login',
+  standalone: true,
+  imports: [ReactiveFormsModule, FormsModule, HttpClientModule],
+  providers:[AuthService, TokenServiceService],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
+})
+export default class LoginComponent implements OnInit{
+
+
+  login:FormGroup;
+  valorObservable$: Observable<any> = new Observable();
+  constructor(private fb:FormBuilder, private auth:AuthService, private token: TokenServiceService, private route:Router){
+
+    this.login= this.fb.group({
+      email:['', [Validators.required, Validators.email]],
+      password:['', Validators.compose([Validators.required, Validators.minLength(2)])]
+    })
+
+  }
+  ngOnInit(): void {
+    //throw new Error('Method not implemented.');
+    
+    this.valorObservable$ = this.login.valueChanges;
+    /* this.login.valueChanges.subscribe((changes)=>{
+      console.log(this.login.get('email')?.errors);
+    }) */
+
+    this.valorObservable$.subscribe(nuevoValor => {
+      console.log('El valor del FormGroup ha cambiado:', nuevoValor.email);
+      // Aquí puedes realizar las acciones que desees con el nuevo valor
+    });
+  }
+
+
+
+  
+
+
+  loginSign():void{
+      let data:AuthDto;
+      data = this.login.value;
+      /* this.auth.loginPost(data); */
+
+      // Llamar a loginPost y obtener el Observable que emite la respuesta
+    const loginObservable = this.auth.loginPost(data);
+
+    // Suscribirse al Observable para obtener la respuesta
+    loginObservable.subscribe({
+
+      next:(res)=>{console.log(res)
+
+        console.log('Respuesta recibida:', res);
+        // Puedes hacer algo con la respuesta aquí
+        this.token.saveToken(res.token);
+        this.route.navigateByUrl("/home");
+        
+      },
+    error:(error)=>{
+      console.log(error);
+    }
+  });
+
+}
+
+}
+
+  
+      `,
+      codigo2:`
+      @Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  constructor(private http:HttpClient) { }
+
+
+  url:string="http://localhost:8086/auth/sign-in";
+
+
+  loginPost(auth:AuthDto):Observable<TokenDto>{
+    console.log(auth);
+    return this.http.post<TokenDto>(this.url, auth);
+  }
+}
+
+      `,
+      codigo3:`
+      @Injectable({
+  providedIn: 'root'
+})
+export class TokenServiceService {
+
+  constructor() { }
+
+
+  public getToken(): string {
+    const token = getCookie("token");
+    if (token === undefined) {
+        // Manejar el caso en el que la cookie no está presente
+        throw new Error("Token no encontrado en las cookies.");
+    }
+    return token;
+    
+  }
+
+  public saveToken(token: string):void{
+    var expirationDate = new Date();
+    expirationDate.setTime(expirationDate.getTime() + (24 * 60 * 60 * 1000));
+   setCookie("token", token, { expires: expirationDate });
+    localStorage.setItem("token", token);
+  }
+}
+
+      `,
+      codigo4:`
+      <form [formGroup]="login">
+   <div>
+    <label for="email">Email</label>
+    <input type="email" name="email" formControlName="email">
+   </div>
+
+   <div>
+    <label for="password">Pasword</label>
+    <input type="password" name="password" formControlName="password">
+
+    <button (click)="loginSign()">enviar</button>
+   </div>
+</form>
+
+      `,
+      codigo5:`
+      import { Routes } from '@angular/router';
+import { loginguardGuard } from './core/guards/loginguard.guard';
+
+export const routes: Routes = [
+
+    {
+        path:'login',
+        title:'login',
+        loadChildren: ()=>import('./features/auth/pages/auth.routes')
+    },
+    {
+        path:'home',
+        title:'home',
+        loadComponent:()=>import('./features/home/pages/home/home.component'), canActivate:[loginguardGuard]
+    }
+];
+
+      `,
+      codigo6:`
+      import { Routes } from "@angular/router";
+
+
+const routes:Routes=[
+    {
+        path:'',
+        title:'login',
+        loadComponent: ()=>import('./login/login.component')
+    },
+    {
+        path:'register',
+        title:'register',
+        loadComponent: ()=>import('./register/register.component')
+    },
+];
+
+export default routes;
+      `,
+      codigo7:`
+      import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { TokenServiceService } from '../services/token-service.service';
+
+
+
+
+export const loginguardGuard: CanActivateFn = (route, state) => {
+  
+  const auth = inject(TokenServiceService);
+  const router = inject(Router);
+  if(auth.getToken()!==null){
+
+    return true;
+  }else{
+    return false;
+  }
+};
+
+      `,
+      codigo8:``,
+      codigo9:``,
+      
+    };
+    ---

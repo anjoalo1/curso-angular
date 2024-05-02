@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Myimagen from '../components/Myimagen.astro';
+import Articlep from '../components/Articlep.astro';
+import Addimagen from '../components/Addimagen.astro';
+import Navigation from '../components/Navigation.astro';
+
+/* const typelang ="java"; */
+---
+
+<Layout title="Welcome to Astro.">
+	<div slot="aside">
+		<p>este es el aside </p>
+		
+	</div>
+	<main slot="main">
+
+
+		<h1>CURSO Angular 17</h1>
+
+		
+		<Articlep>
+			<h1 class="title-h1">Curso Angular 17</h1>
+
+			<p class="parrafo">Angular es un framework de desarrollo web de código abierto y basado en TypeScript, mantenido por Google y una comunidad de desarrolladores. Es utilizado para construir aplicaciones web de una sola página (SPA), aplicaciones web progresivas (PWA) y aplicaciones móviles híbridas.</p>
+			<p class="parrafo">Angular proporciona un conjunto de herramientas y funcionalidades para simplificar el desarrollo web, incluyendo:</p>
+			<p class="parrafo">    Componentes: Angular organiza la interfaz de usuario en componentes reutilizables, lo que facilita la construcción y mantenimiento de aplicaciones web.
+
+				Enlace de datos bidireccional: Angular utiliza un enlace de datos bidireccional, lo que significa que los cambios en el modelo de datos se reflejan automáticamente en la interfaz de usuario y viceversa.
+			
+				Inyección de dependencias: Angular ofrece un sistema de inyección de dependencias que facilita la gestión de dependencias y la escritura de código modular y mantenible.
+			
+				Directivas: Angular proporciona directivas que permiten extender el comportamiento de los elementos HTML, como ocultar, mostrar, repetir elementos, etc.
+			
+				Enrutamiento: Angular incluye un enrutador que permite la navegación entre diferentes vistas de la aplicación de forma fácil y organizada.
+			
+				Servicios: Angular permite la creación de servicios que encapsulan la lógica de negocio y pueden ser compartidos entre componentes.
+			
+				Testing: Angular está diseñado con pruebas en mente, lo que facilita la escritura de pruebas unitarias y de integración para asegurar la calidad del código.</p>
+			<p class="parrafo"></p>
+			<p class="parrafo"></p>
+			<p class="parrafo"></p>
+			
+		</Articlep>
+
+
+	
+
+	</main>
+
+	
+</Layout>
+
+<style>
+
+
+
+
+	
+	main {
+	/* 	margin: 0 auto;
+		padding: 1rem; */
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+		/* margin: 10px; */
+	}
+	
+
+
+	h1 {
+		font-size: 4rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: center;
+		margin-bottom: 1em;
+	}
+	
+	
+	
+</style>

@@ -1,0 +1,64 @@
+---
+import Code  from "../../components/Code.astro";
+import Articlep from "../../components/Articlep.astro";
+import Layout from "../../layouts/Layout.astro";
+
+const typelang ="line-numbers language-typescript";
+const htmlLang = "language-html line-numbers";
+
+import  { codigos } from './codigos/petitions/codigo.astro';
+
+
+
+
+---
+
+<Layout title="Welcome to Astro.">
+	
+	<main slot="main">
+
+
+		<h1 class="title-h1">CURSO Angular 17</h1>
+
+		
+		<Articlep>
+      <h1 class="title-h1">Curso Angular 17</h1>
+
+      <h2 class="title-2">En el html</h2>
+
+      <Code codigo={codigos.codigo4} typeLan={htmlLang}></Code>
+
+      <p class="parrafo">En la pagina ts</p>
+           <Code codigo={codigos.codigo1} typeLan={typelang}></Code>
+           
+          </Articlep>
+          
+          <Articlep>
+            <h2 class="title-h2">service post</h2>
+            <Code codigo={codigos.codigo2} typeLan={typelang}></Code>
+            
+            <h2>token service</h2>
+            <Code codigo={codigos.codigo3} typeLan={typelang}></Code>
+            
+            <h2>En el archivo de ruta principal</h2>
+            <Code codigo={codigos.codigo5} typeLan={typelang}></Code>
+            
+            <h2>En el de rutas fijas</h2>
+            
+            <Code codigo={codigos.codigo6} typeLan={typelang}></Code>
+            <h2>Configuracoin canActivate</h2>
+            <Code codigo={codigos.codigo7} typeLan={typelang}></Code>
+            <p class="parrafo"></p>
+      <p class="parrafo"></p>
+      <p class="parrafo"></p>
+    </Articlep>
+
+       
+
+
+	
+
+	</main>
+
+	
+</Layout>
